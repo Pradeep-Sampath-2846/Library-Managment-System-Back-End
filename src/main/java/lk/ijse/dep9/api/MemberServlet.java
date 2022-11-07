@@ -259,7 +259,7 @@ public class MemberServlet extends HTTPServlet2 {
                     throw new JsonbException("Name is empty or Invalid");
                 } else if (member.getContact()==null || !member.getContact().matches("\\d{3}-\\d{7}")) {
                     throw new JsonbException("Contact is empty of Invalid");
-                } else if (member.getAddress()==null || !member.getAddress().matches("[A-Za-z0-9,:./\\-]+")) {
+                } else if (member.getAddress()==null || !member.getAddress().matches("[A-Za-z0-9|,.:;#/\\ -]+")) {
                     throw new JsonbException("Address is empty or Invalid");
                 }
 
@@ -276,6 +276,7 @@ public class MemberServlet extends HTTPServlet2 {
                     if (affectedRows==1){
                         response.setStatus(HttpServletResponse.SC_CREATED);
                         response.setContentType("application/json");
+                        response.addHeader("Access-Control-Allow-Origin","*");
                         JsonbBuilder.create().toJson(member,response.getWriter());
                     }
 
@@ -290,7 +291,6 @@ public class MemberServlet extends HTTPServlet2 {
         }else {
             response.sendError(HttpServletResponse.SC_NOT_IMPLEMENTED);
         }
-
 
     }
 
@@ -366,7 +366,7 @@ public class MemberServlet extends HTTPServlet2 {
                 throw new JsonbException("Name is empty or Invalid");
             } else if (member.getContact()==null || !member.getContact().matches("\\d{3}-\\d{7}")) {
                 throw new JsonbException("Contact is empty of Invalid");
-            } else if (member.getAddress()==null || !member.getAddress().matches("[A-Za-z0-9,:./\\-]+")) {
+            } else if (member.getAddress()==null || !member.getAddress().matches("[A-Za-z0-9|,.:;#/\\ -]+")) {
                 throw new JsonbException("Address is empty or Invalid");
             }
 
@@ -389,6 +389,19 @@ public class MemberServlet extends HTTPServlet2 {
             }
         } catch (JsonbException e) {
             response.sendError(HttpServletResponse.SC_BAD_REQUEST,e.getMessage());
+        }
+    }
+
+    @Override
+    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setHeader("Access-Control-Allow-Origin","*");
+        resp.setHeader("Access-Control-Allow-Methods","POST,GET,PATCH,DELETE,HEAD,OPTIONS,PUT");
+
+
+        String headers = req.getHeader("Access-Control-Request-Headers");
+        if (headers !=null){
+            resp.setHeader("Access-Control-Allow-Headers",headers);
+            resp.setHeader("Access-Control-Expose-Headers",headers);
         }
     }
 }
