@@ -262,9 +262,9 @@ public class BookServlet extends HTTPServlet2 {
                     int affectedRows = stm.executeUpdate();
 
                     if (affectedRows==1){
+                        response.setHeader("Access-Control-Allow-Origin","*");
                         response.setStatus(HttpServletResponse.SC_CREATED);
                         response.setContentType("application/json");
-                        response.setHeader("Access-Control-Allow-Origin","*");
                         JsonbBuilder.create().toJson(book,response.getWriter());
                     }
 
@@ -318,7 +318,7 @@ public class BookServlet extends HTTPServlet2 {
 
                 if (book.getIsbn()==null || !book.getIsbn().matches("^\\d{13}$") || !isbn.equals(book.getIsbn())){
                     throw new JsonbException("Invalid ISBN Number");
-                } else if (book.getTitle()==null || !book.getTitle().matches("^[A-Za-z0-9 ]+$")) {
+                } else if (book.getTitle()==null || !book.getTitle().matches("^[A-Za-z0-9 -]+$")) {
                     throw new JsonbException("Title empty or Invalid !");
                 } else if (book.getAuthor()==null || !book.getAuthor().matches("^[A-Za-z0-9 -]+$")) {
                     throw new JsonbException("Author empty or Invalid!");
