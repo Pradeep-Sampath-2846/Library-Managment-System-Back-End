@@ -351,4 +351,17 @@ public class BookServlet extends HTTPServlet2 {
             }
 
     }
+
+    @Override
+    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setHeader("Access-Control-Allow-Origin","*");
+        resp.setHeader("Access-Control-Allow-Methods","POST,GET,PATCH,HEAD,OPTIONS,PUT");
+
+
+        String headers = req.getHeader("Access-Control-Request-Headers");
+        if (headers !=null){
+            resp.setHeader("Access-Control-Allow-Headers",headers);
+            resp.setHeader("Access-Control-Expose-Headers",headers);
+        }
+    }
 }
