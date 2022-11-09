@@ -142,9 +142,9 @@ public class MemberServlet extends HTTPServlet2 {
                 members.add(new MemberDTO(id,name,address,contact));
 
             }
-            response.addHeader("Access-Control-Allow-Origin","*");
-            response.addHeader("Access-Control-Allow-headers","*");
-            response.addHeader("Access-Control-Expose-headers","*");
+//            response.addHeader("Access-Control-Allow-Origin","*");
+//            response.addHeader("Access-Control-Allow-headers","*");
+//            response.addHeader("Access-Control-Expose-headers","*");
             Jsonb jsonb = JsonbBuilder.create();
             response.setContentType("application/json");
             jsonb.toJson(members,response.getWriter());
@@ -178,9 +178,9 @@ public class MemberServlet extends HTTPServlet2 {
                 members.add(new MemberDTO(id,name,address,contact));
 
             }
-            response.addHeader("Access-Control-Allow-Origin","*");
-            response.addHeader("Access-Control-Allow-headers","*");
-            response.addHeader("Access-Control-Expose-headers","*");
+//            response.addHeader("Access-Control-Allow-Origin","*");
+//            response.addHeader("Access-Control-Allow-headers","*");
+//            response.addHeader("Access-Control-Expose-headers","*");
             Jsonb jsonb = JsonbBuilder.create();
             response.setContentType("application/json");
             jsonb.toJson(members,response.getWriter());
@@ -210,7 +210,7 @@ public class MemberServlet extends HTTPServlet2 {
 
 
             }
-            response.addHeader("Access-Control-Allow-Origin","*");
+//            response.addHeader("Access-Control-Allow-Origin","*");
             Jsonb jsonb = JsonbBuilder.create();
             response.setContentType("application/json");
             jsonb.toJson(members,response.getWriter());
@@ -235,7 +235,7 @@ public class MemberServlet extends HTTPServlet2 {
                 String contact = rst.getString("contact");
 
                 response.setContentType("application/json");
-                response.setHeader("Access-Control-Allow-Origin","*");
+//                response.setHeader("Access-Control-Allow-Origin","*");
                 JsonbBuilder.create().toJson(new MemberDTO(id,name,address,contact),response.getWriter());
 
             }else {
@@ -277,7 +277,7 @@ public class MemberServlet extends HTTPServlet2 {
                     if (affectedRows==1){
                         response.setStatus(HttpServletResponse.SC_CREATED);
                         response.setContentType("application/json");
-                        response.setHeader("Access-Control-Allow-Origin","*");
+//                        response.setHeader("Access-Control-Allow-Origin","*");
                         JsonbBuilder.create().toJson(member,response.getWriter());
                     }
 
@@ -320,7 +320,7 @@ public class MemberServlet extends HTTPServlet2 {
             if (affectedRows==0){
                 response.sendError(HttpServletResponse.SC_NOT_FOUND,"Invalid member ID");
             }else {
-                response.setHeader("Access-Control-Allow-Origin","*");
+//                response.setHeader("Access-Control-Allow-Origin","*");
                 response.setStatus(HttpServletResponse.SC_NO_CONTENT);
             }
         } catch (SQLException e) {
@@ -381,7 +381,7 @@ public class MemberServlet extends HTTPServlet2 {
                 stm.setString(4,member.getId());
 
                 if (stm.executeUpdate()==1){
-                    response.setHeader("Access-Control-Allow-Origin","*");
+//                    response.setHeader("Access-Control-Allow-Origin","*");
                     response.setStatus(HttpServletResponse.SC_NO_CONTENT);
                 }else {
                     response.sendError(HttpServletResponse.SC_NOT_FOUND,"Member does not exists");
@@ -395,17 +395,17 @@ public class MemberServlet extends HTTPServlet2 {
         }
     }
 
-    @Override
-    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setHeader("Access-Control-Allow-Origin","*");
-        resp.setHeader("Access-Control-Allow-Methods","POST,GET,PATCH,DELETE,HEAD,OPTIONS,PUT");
-
-
-        String headers = req.getHeader("Access-Control-Request-Headers");
-        if (headers !=null){
-            resp.setHeader("Access-Control-Allow-Headers",headers);
-            resp.setHeader("Access-Control-Expose-Headers",headers);
-        }
-    }
+//    @Override
+//    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        resp.setHeader("Access-Control-Allow-Origin","*");
+//        resp.setHeader("Access-Control-Allow-Methods","POST,GET,PATCH,DELETE,HEAD,OPTIONS,PUT");
+//
+//
+//        String headers = req.getHeader("Access-Control-Request-Headers");
+//        if (headers !=null){
+//            resp.setHeader("Access-Control-Allow-Headers",headers);
+//            resp.setHeader("Access-Control-Expose-Headers",headers);
+//        }
+//    }
 }
 

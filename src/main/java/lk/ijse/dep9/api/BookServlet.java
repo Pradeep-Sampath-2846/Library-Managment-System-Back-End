@@ -71,7 +71,7 @@ public class BookServlet extends HTTPServlet2 {
                 int copies = rst.getInt("copies");
 
                 response.setContentType("application/json");
-                response.setHeader("Access-Control-Allow-Origin","*");
+//                response.setHeader("Access-Control-Allow-Origin","*");
                 Jsonb jsonb = JsonbBuilder.create();
                 jsonb.toJson(new BooksDTO(isbn1,title,author,copies),response.getWriter());
             }else {
@@ -102,7 +102,7 @@ public class BookServlet extends HTTPServlet2 {
                 books.add(new BooksDTO(isbn,title,author,copies));
             }
 
-            response.setHeader("Access-Control-Allow-Origin","*");
+//            response.setHeader("Access-Control-Allow-Origin","*");
             response.setContentType("application/json");
             Jsonb jsonb = JsonbBuilder.create();
             jsonb.toJson(books,response.getWriter());
@@ -136,9 +136,9 @@ public class BookServlet extends HTTPServlet2 {
                 books.add(new BooksDTO(isbn,title,author,copies));
             }
 
-            response.addHeader("Access-Control-Allow-Origin","*");
-            response.addHeader("Access-Control-Allow-headers","*");
-            response.addHeader("Access-Control-Expose-headers","*");
+//            response.addHeader("Access-Control-Allow-Origin","*");
+//            response.addHeader("Access-Control-Allow-headers","*");
+//            response.addHeader("Access-Control-Expose-headers","*");
             response.setContentType("application/json");
             Jsonb jsonb = JsonbBuilder.create();
             jsonb.toJson(books,response.getWriter());
@@ -211,9 +211,9 @@ public class BookServlet extends HTTPServlet2 {
                 books.add(new BooksDTO(isbn,title,author,copies));
             }
 
-            response.addHeader("Access-Control-Allow-Origin","*");
-            response.addHeader("Access-Control-Allow-headers","*");
-            response.addHeader("Access-Control-Expose-headers","*");
+//            response.addHeader("Access-Control-Allow-Origin","*");
+//            response.addHeader("Access-Control-Allow-headers","*");
+//            response.addHeader("Access-Control-Expose-headers","*");
             response.setContentType("application/json");
             Jsonb jsonb = JsonbBuilder.create();
             jsonb.toJson(books,response.getWriter());
@@ -262,7 +262,7 @@ public class BookServlet extends HTTPServlet2 {
                     int affectedRows = stm.executeUpdate();
 
                     if (affectedRows==1){
-                        response.setHeader("Access-Control-Allow-Origin","*");
+//                        response.setHeader("Access-Control-Allow-Origin","*");
                         response.setStatus(HttpServletResponse.SC_CREATED);
                         response.setContentType("application/json");
                         JsonbBuilder.create().toJson(book,response.getWriter());
@@ -334,7 +334,7 @@ public class BookServlet extends HTTPServlet2 {
                     int affectedRows = stm.executeUpdate();
 
                     if (affectedRows==1){
-                        response.setHeader("Access-Control-Allow-Origin","*");
+//                        response.setHeader("Access-Control-Allow-Origin","*");
                         response.setStatus(HttpServletResponse.SC_NO_CONTENT);
                     }else {
                         response.sendError(HttpServletResponse.SC_NOT_FOUND,"Book does not exists");
@@ -352,16 +352,16 @@ public class BookServlet extends HTTPServlet2 {
 
     }
 
-    @Override
-    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setHeader("Access-Control-Allow-Origin","*");
-        resp.setHeader("Access-Control-Allow-Methods","POST,GET,PATCH,HEAD,OPTIONS,PUT");
-
-
-        String headers = req.getHeader("Access-Control-Request-Headers");
-        if (headers !=null){
-            resp.setHeader("Access-Control-Allow-Headers",headers);
-            resp.setHeader("Access-Control-Expose-Headers",headers);
-        }
-    }
+//    @Override
+//    protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        resp.setHeader("Access-Control-Allow-Origin","*");
+//        resp.setHeader("Access-Control-Allow-Methods","POST,GET,PATCH,HEAD,OPTIONS,PUT");
+//
+//
+//        String headers = req.getHeader("Access-Control-Request-Headers");
+//        if (headers !=null){
+//            resp.setHeader("Access-Control-Allow-Headers",headers);
+//            resp.setHeader("Access-Control-Expose-Headers",headers);
+//        }
+//    }
 }

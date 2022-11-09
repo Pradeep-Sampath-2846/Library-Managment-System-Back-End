@@ -9,12 +9,12 @@ public class BooksDTO implements Serializable {
     private String isbn;
     private String title;
     private String author;
-    private int copies;
+    private Integer copies;
 
     public BooksDTO() {
     }
 
-    public BooksDTO(String isbn, String title, String author, int copies) {
+    public BooksDTO(String isbn, String title, String author, Integer copies) {
         this.isbn = isbn;
         this.title = title;
         this.author = author;
@@ -45,11 +45,11 @@ public class BooksDTO implements Serializable {
         this.author = author;
     }
 
-    public int getCopies() {
+    public Integer getCopies() {
         return copies;
     }
 
-    public void setCopies(int copies) {
+    public void setCopies(Integer copies) {
         this.copies = copies;
     }
 }
