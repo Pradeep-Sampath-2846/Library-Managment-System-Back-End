@@ -9,30 +9,52 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
-@WebFilter(urlPatterns = {"/members/*","/books/*"})
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+//@WebFilter(filterName = "cors-filter",urlPatterns = {"/members/*","/books/*"})
 public class CorsFilter extends HttpFilter {
+    private String[] origins ;
+    @Override
+    public void init() throws ServletException {
+        String origin = getFilterConfig().getInitParameter("origins");
+        System.out.println(origin);
+        origins = origin.split(", ");
+    }
+
     @Override
     protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
-        if (!req.getMethod().equalsIgnoreCase("OPTIONS")){
 
-            res.addHeader("Access-Control-Allow-Origin","*");
+        String requestedOrigin = req.getHeader("Origin");
 
-            if (req.getParameter("page")!=null && req.getParameter("size")!=null){
-                res.addHeader("Access-Control-Allow-headers","*");
-                res.addHeader("Access-Control-Expose-headers","*");
+        for (String origin : origins) {
+            if(requestedOrigin.startsWith(origin.trim())){
+                res.addHeader("Access-Control-Allow-Origin","*");
+                break;
             }
-            chain.doFilter(req,res);
+        }
+
+        if (req.getMethod().equalsIgnoreCase("OPTIONS")){
+            //let's handle pre-flighted requests
+            res.setHeader("Access-Control-Allow-Methods","POST,GET,DELETE,PATCH,HEAD,OPTIONS");
+
+            String requestedMethod = req.getHeader("Access-Control-Request-Method");
+            String requestedHeaders = req.getHeader("Access-Control-Request-Headers");
+
+            if ((requestedMethod.equalsIgnoreCase("POST") ||
+                    requestedMethod.equalsIgnoreCase("PATCH")) && requestedHeaders.toLowerCase().contains("content-type")){
+
+                res.setHeader("Access-Control-Allow-Headers","Content-Type");
+            }
 
         }else {
-            res.setHeader("Access-Control-Allow-Origin","*");
-            res.setHeader("Access-Control-Allow-Methods","POST,GET,PATCH,HEAD,OPTIONS,PUT");
+            if (req.getMethod().equalsIgnoreCase("GET") ||
+                req.getMethod().equalsIgnoreCase("HEAD")){
 
-
-            String headers = req.getHeader("Access-Control-Request-Headers");
-            if (headers !=null){
-                res.setHeader("Access-Control-Allow-Headers",headers);
-                res.setHeader("Access-Control-Expose-Headers",headers);
+                res.setHeader("Access-Control-Expose-Headers","X-Total-Count");
             }
+            chain.doFilter(req,res);
         }
 
     }
